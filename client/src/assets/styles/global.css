@@ -1,0 +1,59 @@
+:root {
+    --color-page-background: black;
+    --color-surface: rgb(71, 71, 71);
+    --color-onSurface: rgb(70, 70, 70);
+    --color-active: white;
+
+    --card-flip-duration: 0.5s;
+}
+
+body {
+    background-color: var(--color-page-background);
+}
+
+.bg-surface {
+    background-color: var(--color-surface);
+}
+.border-surface {
+    border-color: var(--color-surface);
+}
+
+.bg-on-surface{
+    background-color: var(--color-surface);
+}
+.border-on-surface {
+    border-color: var(--color-surface);
+}
+
+.bg-active {
+    background-color: var(--color-active);
+}
+.border-active {
+    border-color: var(--color-active);
+}
+
+.card-face {
+    transition: var(--card-flip-duration);
+    opacity: 100;
+    transform: rotateY(0deg);
+    backface-visibility: hidden;
+}
+.card-up {
+    transition: var(--card-flip-duration);
+    transform: translateY(-100%);
+    opacity: 0;
+}.card-down {
+    transition: var(--card-flip-duration);
+    transform: translateY(100%);
+    opacity: 0;
+}
+.front-turned {
+    transition: var(--card-flip-duration);
+    transform: rotateY(180deg);
+    background-color: black;
+}
+.back-turned {
+    transition: var(--card-flip-duration);
+    transform: rotateY(180deg);
+    background-color: black;
+}
