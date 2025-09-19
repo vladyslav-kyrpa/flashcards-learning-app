@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export function DeckList({decks, className}) {
+export default function DeckList({decks, className}) {
     const navigate = useNavigate();
 
     const handleDeckSelection = (id) => {

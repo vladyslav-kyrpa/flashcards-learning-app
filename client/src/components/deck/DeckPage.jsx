@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
-import { LoadingScreen } from "../LoadingScreen";
+import LoadingScreen from "../LoadingScreen";
 import { useSwipeable } from "react-swipeable";
 
-export function DeckPage(){
+export default function DeckPage(){
     const { id } = useParams();
     const [deck, setDeck] = useState();
     const [isFlipped, setIsFlipped] = useState(false);
