@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import DeckList from "./shared/DeckList";
 import LoadingScreen from "./LoadingScreen";
 import { useNavigate } from "react-router-dom";
+import api from "../api/DeckApp.js";
 
 export default function DeckListPage(){
     const [decks, setDecks] = useState();
     const navigate = useNavigate();
 
     useEffect(()=>{
-        getDecks().then((result)=>{
+        api.getList().then((result)=>{
             console.log(result);
             setDecks(result);
         }).catch((error)=>{
@@ -27,16 +28,4 @@ export default function DeckListPage(){
             onClick={handleOnCreate}>+ Create new deck</div>
         <DeckList decks={decks} className="m-2"></DeckList>
     </div>
-}
-
-function getDecks(){
-    return new Promise((resolve)=>{
-        setTimeout(()=>{
-            resolve([
-                { id:"1", title: "deck1" },
-                { id:"2", title: "deck2" },
-                { id:"3", title: "deck3" }
-            ]);
-        }, 1000);
-    });
 }

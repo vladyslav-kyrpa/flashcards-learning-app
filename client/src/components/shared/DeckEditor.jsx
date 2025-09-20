@@ -1,7 +1,7 @@
 import useCardsBuilder from "../../hooks/useCardsBuilder";
 import { useState } from "react"
 
-export default function DeckEditor({initTitle = "", initCards = [], onSave}){
+export default function DeckEditor({title:initTitle = "", cards:initCards = [], onSave}){
     const [cards, newCard, editCard, deleteCard] = useCardsBuilder(initCards)
     const [title, setTitle] = useState(initTitle);
     const [selectedIndex, setSelectedIndex] = useState(-1);

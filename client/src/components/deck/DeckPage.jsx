@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
 import { useSwipeable } from "react-swipeable";
+import api from "../../api/DeckApp.js";
 
 export default function DeckPage(){
     const { id } = useParams();
@@ -11,7 +12,7 @@ export default function DeckPage(){
 
     useEffect(()=>{
         setDeck(null); // reset value
-        getDeck(id)
+        api.get(id)
             .then((result)=>{
                 setDeck(result)
                 console.log(result);
@@ -68,21 +69,4 @@ function Card({isFlipped, card, onClick, swipeHandlers}){
             {card.back}
         </div>
     </div>
-
-}
-
-async function getDeck(id) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        id: "1234",
-        title: "Cards set",
-        cards: [
-          { front: "frontSide1 here", back: "backSide here1" },
-          { front: "frontSide2 here", back: "backSide here2" },
-          { front: "frontSide3 here", back: "backSide here3" },
-        ],
-      });
-    }, 1000); // 1 second delay
-  });
 }

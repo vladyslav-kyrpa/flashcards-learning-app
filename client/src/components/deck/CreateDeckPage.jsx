@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import DeckEditor from "../shared/DeckEditor";
+import api from "../../api/DeckApp.js";
 
 export default function CreateDeckPage(){
     const navigate = useNavigate();
 
     const handleOnCreate = (title, cards) => {
-        createDeck(cards, title).then((_)=>{
+        api.create({cards, title}).then((_)=>{
             navigate("/decks");
         }).catch((error)=>{
             console.error(error);
@@ -13,13 +14,4 @@ export default function CreateDeckPage(){
     } 
 
     return <DeckEditor onSave={handleOnCreate}/>
-}
-
-async function createDeck(cards, title) {
-    console.log(title);
-    console.log(cards);
-
-    return new Promise((resolve)=>{
-        setTimeout(()=>{resolve()}, 1000)
-    });
 }
