@@ -1,15 +1,15 @@
 import jwt from "jsonwebtoken";
+import 'dotenv/config';
 
 export async function login(credentials) {
     const payload = {
         id: 123,
-        username: "alice",
-        role: "admin",
-        email:"user@mail.com"
+        username: "user",
+        email:credentials.email
     };
 
-    const issuerKey = process.env.JWT_ISSUER_KEY ||
-        "ecs3ZiY1I00cKV1aFOjuaiMfYAPtRIOwr2FDXprXhwE="; // ALERT: only for dev
+    const issuerKey = process.env.JWT_ISSUER_KEY; 
+    if(!issuerKey) throw Error("JWT_ISSUER_KEY is not defined in .env");
 
     const token = jwt.sign(payload, issuerKey, { expiresIn: "12h" });
 

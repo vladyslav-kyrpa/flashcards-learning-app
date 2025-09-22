@@ -1,28 +1,26 @@
 import axios from "axios";
 
-const root = "http://localhost:8080/auth";
+const root = import.meta.env.VITE_API_URL;
 
 export async function login(email, password){
-    const response = await axios.post(`${root}/log-in`, 
+    const response = await axios.post(`${root}/auth/log-in`, 
         {email, password}, 
-        //{ withCredentials: true }
-        );
+    );
     localStorage.setItem("token", response.data.token ?? "");
 }
 
 export async function register(username, email, password){
-    await axios.post(`${root}/register`, 
+    await axios.post(`${root}/auth/register`, 
         {username, email, password},
-        //{ withCredentials: true }
-        );
+    );
 }
 
 export async function check(){
-    try{
+    try {
         const token = localStorage.getItem("token");
         if(!token) return false;
 
-        await axios.get(`${root}/check`, {
+        await axios.get(`${root}/auth/check`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
