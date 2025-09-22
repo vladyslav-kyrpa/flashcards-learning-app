@@ -4,6 +4,7 @@ import schema from "../schema/deck.schema.js";
 import service from "../services/deck.service.js";
 
 export async function getDeck(req, res) {
+    console.log(`User ${req.user.name} tries to get deck`);
     const { id } = req.params;
     if(!id){
         response.badRequest(res, `Deck id was not provided`);

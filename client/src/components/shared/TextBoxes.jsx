@@ -1,5 +1,7 @@
-export function TextBox({onChange, value, className}) {
-    return <input 
+export function TextBox({onChange, value, className, placeholder, name, hidden }) {
+    return <input name={name} 
+        placeholder={placeholder}
+        type={hidden ? "password": "text"}
         className={`
             w-full 
             box-border
