@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DeckEditor from "../shared/DeckEditor";
 import LoadingScreen from "../LoadingScreen";
-import api from "../../api/DeckApp.js";
+import api from "../../services/DeckApi.js";
 
 export default function EditDeckPage() {
     const [deck, setDeck] = useState();

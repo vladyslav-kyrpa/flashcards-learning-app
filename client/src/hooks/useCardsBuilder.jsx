@@ -4,7 +4,7 @@ export default function useCardsBuilder(initialCards) {
     const [cards, setCards] = useState(initialCards ?? []);
 
     const newCard = () =>{
-        setCards([...cards, {front:"", back:""}]);
+        setCards([{front:"", back:""}, ...cards]);
     }
 
     const editCard = (index, card) =>{

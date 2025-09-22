@@ -2,7 +2,9 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import LoadingScreen from "../LoadingScreen";
 import { useSwipeable } from "react-swipeable";
-import api from "../../api/DeckApp.js";
+import api from "../../services/DeckApi.js";
+import { ActiveButton } from "../shared/Buttons.jsx";
+import Card from "../shared/Card.jsx";
 
 export default function DeckPage(){
     const { id } = useParams();
@@ -49,24 +51,12 @@ export default function DeckPage(){
     if(deck.cards.length == 0)
         return <div>No cards... something is wrong</div>
 
-    return <div className="flex flex-col h-screen items-center justify-center">
+    return <div className="flex flex-col items-center justify-center">
         <Card swipeHandlers={swipeHandlers} isFlipped={isFlipped} 
             onClick={toggleCard} card={deck.cards[cardIndex]}/>
-        <div>
-            <button className="bg-active m-2 p-3" onClick={prevCard}>prev</button>
-            <button className="bg-active m-2 p-3" onClick={nextCard}>next</button>
-        </div>
-    </div>
-}
-
-function Card({isFlipped, card, onClick, swipeHandlers}){
-    const baseStyle = "absolute card-face p-10 bg-active w-full h-full"
-    return <div {...swipeHandlers} className="relative w-64 h-80" onClick={onClick}>
-        <div className={`${baseStyle} ${isFlipped && "front-turned"}`}>
-            {card.front}
-        </div>
-        <div className={`${baseStyle} ${!isFlipped && "back-turned"}`}>
-            {card.back}
+        <div className="flex gap-2">
+            <ActiveButton className="flex-1 w-10" onClick={prevCard}>{`<`}</ActiveButton>
+            <ActiveButton className="flex-1 w-10" onClick={nextCard}>{`>`}</ActiveButton>
         </div>
     </div>
 }

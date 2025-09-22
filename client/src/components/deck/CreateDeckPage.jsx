@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import DeckEditor from "../shared/DeckEditor";
-import api from "../../api/DeckApp.js";
+import api from "../../services/DeckApi.js";
 
 export default function CreateDeckPage(){
     const navigate = useNavigate();

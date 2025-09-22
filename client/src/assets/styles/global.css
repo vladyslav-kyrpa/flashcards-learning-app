@@ -1,26 +1,36 @@
 :root {
-    --color-page-background: black;
-    --color-surface: rgb(71, 71, 71);
-    --color-onSurface: rgb(70, 70, 70);
-    --color-active: white;
-
+    --color-page-background: #17181B;
+    --color-surface: #232429;
+    --color-on-surface: #363840;
+    --color-sub-surface: #17181B;
+    --color-active: #FFA14A;
+    --color-boder-active: #ffbc7d;
+    --text-color: white;
+    --text-color-negative: black;
     --card-flip-duration: 0.5s;
 }
 
 body {
     background-color: var(--color-page-background);
+    color: var(--text-color);
+}
+
+.bg-sub-surface{
+    background-color: var(--color-sub-surface);
 }
 
 .bg-surface {
     background-color: var(--color-surface);
 }
+
 .border-surface {
     border-color: var(--color-surface);
 }
 
 .bg-on-surface{
-    background-color: var(--color-surface);
+    background-color: var(--color-on-surface);
 }
+
 .border-on-surface {
     border-color: var(--color-surface);
 }
@@ -28,6 +38,21 @@ body {
 .bg-active {
     background-color: var(--color-active);
 }
+
+.border-active {
+    border-color: var(--color-boder-active);
+}
+.bg-active-gradient {
+    background: linear-gradient(-10deg, var(--color-active), var(--color-boder-active)); 
+}
+
+.text-main-color {
+    color: var(--text-color);
+}
+.text-negative-main-color {
+    color: var(--text-color-negative) !important;
+}
+
 .border-active {
     border-color: var(--color-active);
 }
@@ -38,15 +63,7 @@ body {
     transform: rotateY(0deg);
     backface-visibility: hidden;
 }
-.card-up {
-    transition: var(--card-flip-duration);
-    transform: translateY(-100%);
-    opacity: 0;
-}.card-down {
-    transition: var(--card-flip-duration);
-    transform: translateY(100%);
-    opacity: 0;
-}
+
 .front-turned {
     transition: var(--card-flip-duration);
     transform: rotateY(180deg);
@@ -56,4 +73,19 @@ body {
     transition: var(--card-flip-duration);
     transform: rotateY(180deg);
     background-color: black;
+}
+
+.shadow {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.pop-on-hover {
+    transition: ease-in 0.05s;
+    scale: 1;
+}
+
+.pop-on-hover:hover {
+    transition: ease-in 0.1s;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    scale: 1.01;
 }
