@@ -1,6 +1,7 @@
 import express from "express";
 import deckRoutes from "./routes/deck.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import profileRoutes from "./routes/profile.routes.js";
 import cors from "cors";
 import jwt from "./middlewares/tokenAuthMiddleware.js";
 import logger from "./middlewares/requestLoggerMiddleware.js";
@@ -10,7 +11,7 @@ export function initServer() {
 
     // Middleware
     app.use(cors({
-        origin:"*",
+        origin: "*",
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"]
     }));
@@ -19,7 +20,7 @@ export function initServer() {
     // parse token
     app.use((req, res, next) => {
         const header = req.header("Authorization");
-        if(header) req.token = header.split(" ")[1];
+        if (header) req.token = header.split(" ")[1];
         next();
     });
 
@@ -34,6 +35,7 @@ export function initServer() {
 
     // Secure routes 
     app.use("/decks", deckRoutes);
+    app.use("/profiles", profileRoutes);
 
     return app;
 }

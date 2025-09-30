@@ -7,11 +7,11 @@ import registerSchema from "../schema/register.schema.js";
 import 'dotenv/config';
 
 export async function check(req, res) {
-    const issuerKey = process.env.JWT_ISSUER_KEY 
-    if(!issuerKey) throw Error("JWT_ISSUER_KEY is not defined in .env");
+    const issuerKey = process.env.JWT_ISSUER_KEY
+    if (!issuerKey) throw Error("JWT_ISSUER_KEY is not defined in .env");
 
-    jwt.verify(req.token, issuerKey, (err, user)=>{
-        if(err) responses.badRequest(res, "Not authenticated");
+    jwt.verify(req.token, issuerKey, (err, user) => {
+        if (err) responses.badRequest(res, "Not authenticated");
         else responses.ok(res, `Authenticated as ${user.email}`);
     });
 }
@@ -20,19 +20,19 @@ export async function login(req, res) {
     const credentials = req.body;
 
     const errors = validateSchema(loginSchema, credentials);
-    if(errors.length > 0){
-        responses.badRequest(res, {errors});
-        console.error(`Error during logging-in: ${errors.reduce((v,c)=>`${v}, ${c}`)}`);
+    if (errors.length > 0) {
+        responses.badRequest(res, { errors });
+        console.error(`Error during logging-in: ${errors.reduce((v, c) => `${v}, ${c}`)}`);
         return;
     }
 
     try {
-        const token = await service.login({credentials});
+        const token = await service.login(credentials);
         console.log(`User ${credentials.email} logged-in`)
-        responses.ok(res, {token});
-    } catch(error) {
+        responses.ok(res, { token });
+    } catch (error) {
         console.error(error);
-        responses.badRequest(res, {"error":"Failed log-in attempt"});
+        responses.badRequest(res, { "error": "Failed log-in attempt" });
     }
 }
 
@@ -40,18 +40,18 @@ export async function register(req, res) {
     const userData = req.body;
 
     const errors = validateSchema(registerSchema, userData);
-    if(errors.length > 0){
-        responses.badRequest(res, {errors});
-        console.error(`Error during registration: ${errors.reduce((v,c)=>`${v}, ${c}`)}`);
+    if (errors.length > 0) {
+        responses.badRequest(res, { errors });
+        console.error(`Error during registration: ${errors.reduce((v, c) => `${v}, ${c}`)}`);
         return;
     }
 
     try {
-        const token = await service.register({credentials: userData});
+        const token = await service.register(userData);
         console.log(`User ${userData.email} registered`)
-        responses.ok(res, {token});
-    } catch(error) {
+        responses.ok(res, { token });
+    } catch (error) {
         console.error(error);
-        responses.badRequest(res, {"error":"Failed register attempt"});
+        responses.badRequest(res, { "error": "Failed register attempt" });
     }
 }
