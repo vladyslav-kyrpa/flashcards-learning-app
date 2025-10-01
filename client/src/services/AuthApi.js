@@ -2,23 +2,23 @@ import axios from "axios";
 
 const root = import.meta.env.VITE_API_URL;
 
-export async function login(email, password){
-    const response = await axios.post(`${root}/auth/log-in`, 
-        {email, password}, 
+export async function login(email, password) {
+    const response = await axios.post(`${root}/auth/log-in`,
+        { email, password },
     );
     localStorage.setItem("token", response.data.token ?? "");
 }
 
-export async function register(username, email, password){
-    await axios.post(`${root}/auth/register`, 
-        {username, email, password},
+export async function register(name, email, password) {
+    await axios.post(`${root}/auth/register`,
+        { name, email, password },
     );
 }
 
-export async function check(){
+export async function check() {
     try {
         const token = localStorage.getItem("token");
-        if(!token) return false;
+        if (!token) return false;
 
         await axios.get(`${root}/auth/check`, {
             headers: {
@@ -27,7 +27,7 @@ export async function check(){
         });
         return true;
 
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         return false;
     }

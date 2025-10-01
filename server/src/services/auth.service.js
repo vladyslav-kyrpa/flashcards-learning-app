@@ -1,15 +1,12 @@
 import jwt from "jsonwebtoken";
 import schema from "../schema/register.schema.js";
 import 'dotenv/config';
-import { getDatabase } from "../data-access/mongoDb.js";
 import { getHash, verifyHash } from "../utils/hash.js";
 import { validateSchema } from "../schema/validator.js";
+import { UserModel } from "../data-access/models/index.js";
 
 export async function login(credentials) {
-    const db = getDatabase();
-
-    const user = await db.collection("users")
-        .findOne({ "email": credentials.email });
+    const user = await UserModel.findOne({ email: credentials.email });
 
     if (!user || !verifyHash(user.passwordHash, credentials.password))
         throw Error("Invalid user credentials");
@@ -28,19 +25,18 @@ export async function login(credentials) {
 }
 
 export async function register(userData) {
-    const db = getDatabase();
-
     const errors = validateSchema(schema, userData);
     if (errors.length > 0)
         throw Error("Invalid user register data");
 
     const hash = await getHash(userData.password);
 
-    await db.collection("users").insertOne({
+    const user = new UserModel({
         name: userData.name,
         email: userData.email,
         passwordHash: hash
     });
+    await user.save();
 }
 
 export default { login, register };

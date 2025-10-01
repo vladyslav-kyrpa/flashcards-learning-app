@@ -1,27 +1,20 @@
-import { MongoClient } from "mongodb";
-
-let client;
-let db;
+import mongoose from "mongoose";
 
 export async function connect(connectionString, dbName) {
     console.log("Init database connection...");
-    client = new MongoClient(connectionString, {
-        serverSelectionTimeoutMS: 5000
-    });
-    await client.connect();
-    console.log("Connected to a database");
-    db = client.db(dbName);
+    const url = `${connectionString}/${dbName}?authSource=admin`;
+    await mongoose.connect(url);
     console.log("Db connection established");
 }
 
-export function getDatabase() {
-    console.log("Get database");
-    return db;
-}
-
 export async function close() {
-    console.log("Close Db connection");
-    client.close();
+    db.disconnect();
+    console.log("Database connection closed");
 }
 
-export default { connect, getDatabase, close }
+export const ObjectId = mongoose.Schema.ObjectId;
+
+export default {
+    connect, close,
+    ObjectId, //todo: find a better way to do it
+}

@@ -1,13 +1,10 @@
-import { ObjectId } from "mongodb";
-import { getDatabase } from "../data-access/mongoDb.js";
+import { UserModel } from "../data-access/models/user.js";
+import { ObjectId } from "../data-access/mongoDb.js";
 import schema from "../schema/profile.schema.js";
 import { validateSchema } from "../schema/validator.js";
 
 export async function getUser(id) {
-    const db = getDatabase();
-
-    const user = await db.collection("users")
-        .findOne({ _id: new ObjectId(id) });
+    const user = await UserModel.findById(new ObjectId(id));
 
     if (!user) return null;
 
@@ -23,19 +20,16 @@ export async function updateProfile(profile) {
     if (errors.length > 0)
         throw Error("Invalid profile object");
 
-    const db = getDatabase();
+    const user = await UserModel.findById(new ObjectId(profile.id));
 
-    await db.collection("users").updateOne({ _id: new ObjectId(profile.id) }, {
-        $set: { name: profile.name, email: profile.email }
-    }, {});
+    user.name = profile.name;
+    user.email = profile.email;
+
+    await user.save();
 }
 
 export async function deleteProfile(id) {
-    const db = getDatabase();
-
-    const result = await db.collection("users")
-        .deleteOne({ _id: new ObjectId(id) });
-
+    const result = await UserModel.deleteOne({ _id: new ObjectId(id) });
     if (!result)
         throw Error("User not found");
 }

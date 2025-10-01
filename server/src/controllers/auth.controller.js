@@ -47,9 +47,9 @@ export async function register(req, res) {
     }
 
     try {
-        const token = await service.register(userData);
+        await service.register(userData);
         console.log(`User ${userData.email} registered`)
-        responses.ok(res, { token });
+        responses.ok(res, "Registered");
     } catch (error) {
         console.error(error);
         responses.badRequest(res, { "error": "Failed register attempt" });
