@@ -1,18 +1,19 @@
 import mongoose from "mongoose";
+import log from "../utils/logger.js";
 
 export async function connect(connectionString, dbName) {
-    console.log("Init database connection...");
+    log.info("Init database connection...");
     const url = `${connectionString}/${dbName}?authSource=admin`;
     await mongoose.connect(url);
-    console.log("Db connection established");
+    log.info("Db connection established");
 }
 
 export async function close() {
     db.disconnect();
-    console.log("Database connection closed");
+    log.info("Database connection closed");
 }
 
-export const ObjectId = mongoose.Schema.ObjectId;
+export const ObjectId = mongoose.Types.ObjectId;
 
 export default {
     connect, close,

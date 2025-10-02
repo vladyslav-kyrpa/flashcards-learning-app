@@ -1,9 +1,9 @@
-import { validateSchema } from "./validator.js"
+import { validateSchema } from "./schema_validator.js"
 
 export const schema = {
     id: _ => true,
     title: value => value !== undefined,
-    cards: value => value !== undefined 
+    cards: value => value !== undefined
         && validateSchema(cardSchema, value),
 }
 

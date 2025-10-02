@@ -1,7 +1,7 @@
-import { UserModel } from "../data-access/models/user.js";
-import { ObjectId } from "../data-access/mongoDb.js";
-import schema from "../schema/profile.schema.js";
-import { validateSchema } from "../schema/validator.js";
+import { UserModel } from "../data_access/models/user.js";
+import { ObjectId } from "../data_access/mongo_db.js";
+import schema from "../utils/schema/profile.schema.js";
+import { validateSchema } from "../utils/schema/schema_validator.js";
 
 export async function getUser(id) {
     const user = await UserModel.findById(new ObjectId(id));
@@ -21,6 +21,7 @@ export async function updateProfile(profile) {
         throw Error("Invalid profile object");
 
     const user = await UserModel.findById(new ObjectId(profile.id));
+    if (!user) throw Error("User not found");
 
     user.name = profile.name;
     user.email = profile.email;

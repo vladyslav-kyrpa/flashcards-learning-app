@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
-import schema from "../schema/register.schema.js";
+import schema from "../utils/schema/register.schema.js";
 import 'dotenv/config';
 import { getHash, verifyHash } from "../utils/hash.js";
-import { validateSchema } from "../schema/validator.js";
-import { UserModel } from "../data-access/models/index.js";
+import { validateSchema } from "../utils/schema/schema_validator.js";
+import { UserModel } from "../data_access/models/index.js";
 
 export async function login(credentials) {
     const user = await UserModel.findOne({ email: credentials.email });
