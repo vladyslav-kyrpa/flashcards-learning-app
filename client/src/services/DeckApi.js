@@ -2,11 +2,11 @@ import axios from "axios";
 
 const root = import.meta.env.VITE_API_URL;
 
-export async function getList(){
+export async function getList() {
     const token = localStorage.getItem("token");
-    if(!token) throw Error("No auth token");
+    if (!token) throw Error("No auth token");
 
-    const response = await axios.get(`${root}/decks/`,{
+    const response = await axios.get(`${root}/decks/`, {
         headers: {
             "Authorization": `Bearer ${token}`
         }
@@ -14,11 +14,11 @@ export async function getList(){
     return response.data;
 }
 
-export async function get(id){
+export async function get(id) {
     const token = localStorage.getItem("token");
-    if(!token) throw Error("No auth token");
+    if (!token) throw Error("No auth token");
 
-    const response = await axios.get(`${root}/decks/${id}`,{
+    const response = await axios.get(`${root}/decks/${id}`, {
         headers: {
             "Authorization": `Bearer ${token}`
         }
@@ -26,9 +26,9 @@ export async function get(id){
     return response.data;
 }
 
-export async function create(deck){
+export async function create(deck) {
     const token = localStorage.getItem("token");
-    if(!token) throw Error("No auth token");
+    if (!token) throw Error("No auth token");
 
     await axios.post(`${root}/decks/create`, deck, {
         headers: {
@@ -37,9 +37,9 @@ export async function create(deck){
     });
 }
 
-export async function update(id, deck){
+export async function update(id, deck) {
     const token = localStorage.getItem("token");
-    if(!token) return false;
+    if (!token) return false;
 
     await axios.post(`${root}/decks/update/${id}`, deck, {
         headers: {
@@ -48,4 +48,15 @@ export async function update(id, deck){
     });
 }
 
-export default { getList, get, create, update };
+export async function remove(id) {
+    const token = localStorage.getItem("token");
+    if (!token) return false;
+
+    await axios.post(`${root}/decks/remove/${id}`, {}, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+}
+
+export default { getList, get, create, update, remove };

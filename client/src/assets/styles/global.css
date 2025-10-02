@@ -1,5 +1,6 @@
 :root {
     --color-page-background: #17181B;
+    --color-semi-transparent-background: #0f0f11dc;
     --color-surface: #232429;
     --color-on-surface: #363840;
     --color-sub-surface: #17181B;
@@ -15,7 +16,7 @@ body {
     color: var(--text-color);
 }
 
-.bg-sub-surface{
+.bg-sub-surface {
     background-color: var(--color-sub-surface);
 }
 
@@ -27,7 +28,7 @@ body {
     border-color: var(--color-surface);
 }
 
-.bg-on-surface{
+.bg-on-surface {
     background-color: var(--color-on-surface);
 }
 
@@ -42,13 +43,19 @@ body {
 .border-active {
     border-color: var(--color-boder-active);
 }
+
 .bg-active-gradient {
-    background: linear-gradient(-10deg, var(--color-active), var(--color-boder-active)); 
+    background: linear-gradient(-10deg, var(--color-active), var(--color-boder-active));
+}
+
+.bg-tinted {
+    background: var(--color-semi-transparent-background);
 }
 
 .text-main-color {
     color: var(--text-color);
 }
+
 .text-negative-main-color {
     color: var(--text-color-negative) !important;
 }
@@ -69,6 +76,7 @@ body {
     transform: rotateY(180deg);
     background-color: black;
 }
+
 .back-turned {
     transition: var(--card-flip-duration);
     transform: rotateY(180deg);
