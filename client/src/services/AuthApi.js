@@ -3,16 +3,24 @@ import axios from "axios";
 const root = import.meta.env.VITE_API_URL;
 
 export async function login(email, password) {
-    const response = await axios.post(`${root}/auth/log-in`,
-        { email, password },
-    );
-    localStorage.setItem("token", response.data.token ?? "");
+    try {
+        const response = await axios.post(`${root}/auth/log-in`,
+            { email, password },
+        );
+        localStorage.setItem("token", response.data.token ?? "");
+    } catch (error) {
+        throw Error(error?.response?.data?.error ?? error.message);
+    }
 }
 
 export async function register(name, email, password) {
-    await axios.post(`${root}/auth/register`,
-        { name, email, password },
-    );
+    try {
+        await axios.post(`${root}/auth/register`,
+            { name, email, password },
+        );
+    } catch (error) {
+        throw Error(error?.response?.data?.error ?? error.message);
+    }
 }
 
 export async function check() {
@@ -34,4 +42,8 @@ export async function check() {
 
 }
 
-export default { login, register, check };
+export function logout() {
+    localStorage.setItem("token", "");
+}
+
+export default { login, register, check, logout };

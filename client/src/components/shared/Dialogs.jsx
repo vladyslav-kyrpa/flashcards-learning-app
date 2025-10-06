@@ -8,6 +8,11 @@ export function Confirmation({ message, onConfirm, onCancel }) {
     return <DialogBox actions={actions} title="Confirmation" text={message} />
 }
 
+export function ErrorNotification({ onClose, message }) {
+    return <DialogBox actions={<ActiveButton onClick={onClose} className="w-full">Ok</ActiveButton>}
+        title="Something went wrong" text={message} />
+}
+
 function DialogBox({ title, text, actions }) {
     return <div className="z-10 bg-tinted fixed left-0 top-0 h-screen w-screen flex items-center justify-center">
         <div className="p-10 bg-surface rounded">
@@ -18,5 +23,5 @@ function DialogBox({ title, text, actions }) {
     </div>
 }
 
-export default { Confirmation };
+export default { Confirmation, ErrorNotification };
 

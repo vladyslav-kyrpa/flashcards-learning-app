@@ -8,7 +8,7 @@ export async function create(deck, authorId) {
     if (!authorId)
         throw Error("Cannot create a deck without author")
 
-    const authorExists = await UserModel.exists({ _id: new ObjectId(authorId) });
+    const authorExists = await UserModel.exists({ _id: toObjectId(authorId) });
     if (!authorExists)
         throw Error("Author doesn't exist");
 
@@ -27,17 +27,25 @@ export async function create(deck, authorId) {
 
 export async function remove(id) {
     const result = await DeckModel
-        .findByIdAndDelete(new ObjectId(id));
+        .findByIdAndDelete(toObjectId(id));
 
     if (!result) throw Error("Deck not found");
 }
 
 export async function isAuthor(deckId, userId) {
     const result = await DeckModel.findOne({
-        _id: new ObjectId(deckId),
-        authorId: new ObjectId(userId)
+        _id: toObjectId(deckId),
+        authorId: toObjectId(userId)
     });
     return result ? true : false;
+}
+
+function toObjectId(value) {
+    try {
+        return new ObjectId(value);
+    } catch (error) {
+        throw Error("Invalid Deck ID");
+    }
 }
 
 export async function update(id, updatedDeck) {
@@ -57,10 +65,18 @@ export async function update(id, updatedDeck) {
 export async function getOne(id) {
     const deck = await DeckModel.findById(id);
     if (!deck) throw Error("Deck not found");
+
+    const author = await UserModel.findById(deck.authorId);
+    if (!author) throw Error("Deck author not found");
+
     return {
         id: deck._id,
         title: deck.title,
-        cards: deck.cards
+        cards: deck.cards,
+        author: {
+            id: author._id,
+            name: author.name
+        }
     };
 }
 

@@ -8,6 +8,7 @@ import { Confirmation } from "../shared/Dialogs.jsx";
 
 export default function EditDeckPage() {
     const [deck, setDeck] = useState();
+    const [error, setError] = useState("");
     const { id } = useParams();
 
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function EditDeckPage() {
             setDeck(result);
         }).catch((error) => {
             console.log(error);
+            setError(error.message);
         });
     }, [id]);
 
@@ -41,6 +43,7 @@ export default function EditDeckPage() {
     return <div className="flex flex-col">
         <DeleteButton onClick={handleOnDelete} />
         <DeckEditor cards={deck.cards} title={deck.title} onSave={handleOnSave} />
+        {error && <ErrorNotification onClose={() => setError("")} message={error} />}
     </div>
 }
 

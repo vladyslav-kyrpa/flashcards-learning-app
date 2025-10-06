@@ -10,13 +10,13 @@ import RegisterPage from "./components/RegisterPage"
 
 const LayoutWrapper = () => {
   return <Layout>
-    <Outlet/>
+    <Outlet />
   </Layout>
 }
 
 const ProtectedRouteWrapper = () => {
   return <ProtectedRoute>
-    <Outlet/>
+    <Outlet />
   </ProtectedRoute>
 }
 
@@ -32,8 +32,8 @@ function App() {
           <Route path="/edit-deck/:id" element={<EditDeckPage/>}/>
         </Route>
       </Route>
-      <Route path="/log-in" element={<LoginPage/>}/>
-      <Route path="/register" element={<RegisterPage/>}/>
+      <Route path="/log-in" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
     </Routes>
   </HashRouter>
 }
